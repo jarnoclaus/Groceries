@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="Groceries.MainPage"
+             x:Name="CataloguePage"
+             Title="Producten">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+            <Image
+                Source="shopping_basket.jpg"
+                HeightRequest="185"
+                Aspect="AspectFit"
+                SemanticProperties.Description="dot net bot in a hovercraft number nine" />
+
+            <CollectionView ItemsSource="{Binding catalogue}"
+                            SelectionMode="Single"
+                            SelectionChanged="OnItemSelected">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="1" x:Name="ItemContainer">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="0.9*"/>
+                                <ColumnDefinition Width="0.1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Text="•" FontSize="20" VerticalTextAlignment="Center" Grid.Column="0" HorizontalTextAlignment="Start"/>
+                            <Label Text="{Binding Name}" FontSize="20" Grid.Column="1" Margin="8,0,0,0" VerticalTextAlignment="Center"
+                                   HorizontalTextAlignment="Start"/>
+                            <Label Text="{Binding Priority}" 
+                                       FontSize="20" Grid.Column="2" 
+                                       Margin="8,0,0,0" VerticalTextAlignment="Center"
+                                       HorizontalTextAlignment="End"/>
+                            <Grid.Behaviors>
+                                <toolkit:TouchBehavior
+                                    LongPressCommand="{Binding Source={x:Reference CataloguePage}, Path=BindingContext.OnItemLongPressed}"
+                                    LongPressCommandParameter="{Binding BindingContext, Source={x:Reference ItemContainer}}"
+                                    LongPressDuration="500"/>
+                            </Grid.Behaviors>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Entry x:Name="NewItemName"
+                   Placeholder="Enter grocery name"
+                   FontSize="18"
+                   Margin="0,10,0,0"
+                   WidthRequest="300"
+                   HorizontalOptions="Start"/>
+            <Entry x:Name="NewItemPriority"
+                    Placeholder="Enter grocery priority"
+                    FontSize="18"
+                    Margin="0,10,0,0"
+                    WidthRequest="300"
+                    HorizontalOptions="Start"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.5*"/>                    
+                </Grid.ColumnDefinitions>
+                <Button Text="Voeg toe"
+                        FontSize="18"
+                        Clicked="OnAddItemClicked"
+                        HorizontalOptions="Fill"
+                        Margin="0,0,10,0"/>
+                <Button Text="Toon booschappenlijstje"
+                        FontSize="18"
+                        Clicked="OnToonClicked"
+                        HorizontalOptions="Fill"
+                        Grid.Column="1"/>
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
