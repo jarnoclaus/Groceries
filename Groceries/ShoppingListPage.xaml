@@ -6,7 +6,9 @@
              x:Name="ShoppingListPageRef"
              Title="Boodschappenlijstje">
     <ScrollView>
-        <VerticalStackLayout>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
             <Image
                 Source="shopping_basket.jpg"
                 HeightRequest="185"

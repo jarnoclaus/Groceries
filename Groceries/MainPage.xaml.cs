@@ -1,4 +1,4 @@
-﻿using Groceries.Models;
+﻿using CommunityToolkit.Maui.Extensions;
 using Groceries.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -16,13 +16,11 @@ namespace Groceries
             BindingContext = this;
             OnItemLongPressed = new Command<GroceryItem>(HandleLongPress);
         }
-
         protected override void OnAppearing()
         {
             base.OnAppearing();
             SortList();
         }
-
         public void OnItemSelected(object sender, SelectionChangedEventArgs e)
         {
             var selectedItem = e.CurrentSelection.FirstOrDefault() as GroceryItem;
@@ -48,15 +46,15 @@ namespace Groceries
                 });
             }
         }
-
         public void OnAddItemClicked(object sender, EventArgs e)
         {
             string name = NewItemName.Text;
             var priority = NewItemPriority.Text;
+            var price = NewItemPrice.Text;
 
-            if (!string.IsNullOrEmpty(name) && int.TryParse(priority, out int prior))
-            {
-                GroceryData.Catalogue.Add(new GroceryItem() { Name = name, Priority = prior });
+            if (!string.IsNullOrEmpty(name) && int.TryParse(priority, out int prior) && decimal.TryParse(price, out decimal pr))
+            { // Prijs wordt toegevoegd aan item NIET getoond, Nieuwe page met Shoppinglist = prijs
+                GroceryData.Catalogue.Add(new GroceryItem() { Name = name, Priority = prior, Price = pr });
                 SortList();
             }                
             else
@@ -64,18 +62,25 @@ namespace Groceries
 
             NewItemName.Text = string.Empty;
             NewItemPriority.Text = string.Empty;
+            NewItemPrice.Text = string.Empty;
         }
-
         public async void OnToonClicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("///ShoppingListPage");
         }
-
-        public void HandleLongPress(GroceryItem item)
+        public async void HandleLongPress(GroceryItem item)
         {
-            GroceryData.Catalogue.Remove(item);
+            string action = await Application.Current.MainPage.DisplayActionSheet("Choose action", "Cancel", null, "Edit", "Delete");
+            if (action == "Edit")
+            {
+                var popup = new EditItemPopup(item);
+                await this.ShowPopupAsync(popup);
+            }
+            else if (action == "Delete")
+            {
+                GroceryData.Catalogue.Remove(item);
+            }
         }
-
         public void SortList()
         {
             var sorted = GroceryData.Catalogue.OrderBy(x => x.Name).ToList();
