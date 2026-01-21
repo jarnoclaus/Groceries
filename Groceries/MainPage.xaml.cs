@@ -48,13 +48,13 @@ namespace Groceries
         }
         public void OnAddItemClicked(object sender, EventArgs e)
         {
-            string name = NewItemName.Text;
+            string name = NewItemName.Text.Trim();
             var priority = NewItemPriority.Text;
-            var price = NewItemPrice.Text;
 
-            if (!string.IsNullOrEmpty(name) && int.TryParse(priority, out int prior) && decimal.TryParse(price, out decimal pr))
-            { // Prijs wordt toegevoegd aan item NIET getoond, Nieuwe page met Shoppinglist = prijs
-                GroceryData.Catalogue.Add(new GroceryItem() { Name = name, Priority = prior, Price = pr });
+            if (!string.IsNullOrEmpty(name) && int.TryParse(priority, out int prior))
+            {
+                name = char.ToUpper(name[0]) + name.Substring(1).ToLower();
+                GroceryData.Catalogue.Add(new GroceryItem() { Name = name, Priority = prior });
                 SortList();
             }                
             else
@@ -62,7 +62,6 @@ namespace Groceries
 
             NewItemName.Text = string.Empty;
             NewItemPriority.Text = string.Empty;
-            NewItemPrice.Text = string.Empty;
         }
         public async void OnToonClicked(object sender, EventArgs e)
         {

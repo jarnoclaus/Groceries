@@ -47,7 +47,6 @@ namespace Groceries.Models
                 }
             }
         }
-        public decimal Price { get; set; }
 
         public string DisplayAmount => Amount > 1 ? Amount.ToString() : string.Empty;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

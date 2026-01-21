@@ -49,8 +49,9 @@
                    FontSize="18"
                    Margin="0,10,0,0"
                    WidthRequest="300"
+                   Keyboard="Text"
                    HorizontalOptions="Start"/>
-            
+
             <Entry x:Name="NewItemPriority"
                     Placeholder="Enter grocery priority"
                     FontSize="18"
@@ -58,15 +59,7 @@
                     WidthRequest="300"
                     HorizontalOptions="Start"
                    Keyboard="Numeric"/>
-            
-            <Entry x:Name="NewItemPrice"
-                   Placeholder="Enter grocery price"
-                   FontSize="18"
-                   Margin="0,10,0,0"
-                   WidthRequest="300"
-                   HorizontalOptions="Start"
-                   Keyboard="Numeric"/>
-            
+
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.5*"/>
