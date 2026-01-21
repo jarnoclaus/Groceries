@@ -8,7 +8,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-builder.Services.AddDbContext<GroceryContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddDbContext<GroceryContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(int.Parse(port));
+});
 
 var app = builder.Build();
 
