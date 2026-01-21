@@ -1,4 +1,5 @@
-﻿using Groceries.API.Models;
+﻿using Groceries.API.DTOs;
+using Groceries.API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +20,14 @@ namespace Groceries.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetShoppingList()
         {
-            return Ok(await _context.ShoppingListItems.ToListAsync());
+            var items = await _context.ShoppingListItems.Select(i => new ShoppingListItemDto
+            {
+                Id = i.Id,
+                Name = i.Name,
+                Amount = i.Amount,
+                isPickedUp = false
+            }).ToListAsync();
+            return Ok(items);
         }
 
         [HttpPost]

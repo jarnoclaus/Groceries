@@ -63,7 +63,7 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.5*"/>
-                    <ColumnDefinition Width="0.5*"/>                    
+                    <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions>
                 <Button Text="Voeg toe"
                         FontSize="18"
@@ -75,7 +75,12 @@
                         Clicked="OnToonClicked"
                         HorizontalOptions="Fill"
                         Grid.Column="1"/>
+
             </Grid>
+            <Button Text="Sync"
+        Clicked="OnSyncClicked"
+        HorizontalOptions="Fill"
+        />
         </VerticalStackLayout>
     </ScrollView>
 

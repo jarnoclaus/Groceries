@@ -21,6 +21,7 @@ namespace Groceries.Models
                 OnPropertyChanged();
             }
         }
+
         private int priority;
         public int Priority
         {
