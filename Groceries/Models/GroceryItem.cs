@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Groceries.Models
@@ -12,6 +13,7 @@ namespace Groceries.Models
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         private string name;
+        [JsonPropertyName("name")]
         public string Name
         {
             get { return name; }
@@ -23,6 +25,7 @@ namespace Groceries.Models
         }
 
         private int priority;
+        [JsonPropertyName("priority")]
         public int Priority
         {
             get { return priority; }
@@ -35,6 +38,7 @@ namespace Groceries.Models
 
         public bool IsPickedUp { get; set; } = false;
         private int amount = 1;
+        [JsonPropertyName("amount")]
         public int Amount
         {
             get { return amount; }

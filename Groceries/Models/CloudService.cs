@@ -25,7 +25,12 @@ namespace Groceries.Models
 
         public static async Task SaveShoppingListAsync(ObservableCollection<GroceryItem> list)
         {
-            var json = JsonSerializer.Serialize(list);
+            var dtoList = list.Select(g => new ShoppingListItem
+            {
+                Name = g.Name,
+                Amount = g.Amount
+            }).ToList();
+            var json = JsonSerializer.Serialize(dtoList);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             await _httpClient.PostAsync("api/shoppinglist", content);
         }
@@ -35,9 +40,6 @@ namespace Groceries.Models
             var response = await _httpClient.GetAsync("api/catalogue");
             response.EnsureSuccessStatusCode();
             var json = await response.Content.ReadAsStringAsync();
-            Debug.WriteLine("=======================API RESPONSE=======================");
-            Debug.WriteLine(json);
-            Debug.WriteLine("=======================API RESPONSE=======================");
             return JsonSerializer.Deserialize<List<GroceryItem>>(json) ?? new List<GroceryItem>();
         }
 
@@ -46,9 +48,6 @@ namespace Groceries.Models
             var response = await _httpClient.GetAsync("api/shoppinglist");
             response.EnsureSuccessStatusCode();
             var json = await response.Content.ReadAsStringAsync();
-            Debug.WriteLine("=======================API RESPONSE=======================");
-            Debug.WriteLine(json);
-            Debug.WriteLine("=======================API RESPONSE=======================");
             return JsonSerializer.Deserialize<List<GroceryItem>>(json) ?? new List<GroceryItem>();
         }
 

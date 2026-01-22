@@ -21,16 +21,36 @@ namespace Groceries
             builder.ConfigureLifecycleEvents(events =>
         {
 #if ANDROID
-            events.AddAndroid(android => android.OnStop((activity) => 
+            events.AddAndroid(android => android
+            .OnStop(async (activity) => 
             {
-                _ = FileService.SaveCatalogueList();
-                _ = FileService.SaveShoppingList();
+                try
+                {
+                    await SyncService.PushToCloudAsync();
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                
+                await FileService.SaveCatalogueList();
+                await FileService.SaveShoppingList();
             })
-            .OnPause((activity) =>
+            .OnPause( async(activity) =>
             {
-                _ = FileService.SaveCatalogueList();
-                _ = FileService.SaveShoppingList();
+                try
+                {
+                    await SyncService.PushToCloudAsync();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+
+                await FileService.SaveCatalogueList();
+                await FileService.SaveShoppingList();
             }));
+
 #endif
         });
 

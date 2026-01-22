@@ -89,18 +89,5 @@ namespace Groceries
                 GroceryData.Catalogue.Add(item);
             }
         }
-
-        private async void OnSyncClicked(object sender, EventArgs e)
-        {
-            try
-            {
-                await SyncService.SyncAynsc();
-                await DisplayAlert("Sync", "Sync completed successfully!", "OK");
-            }
-            catch(Exception ex)
-            {
-                await DisplayAlert("Sync failed", ex.Message, "OK");
-            }
-        }
     }
 }

@@ -70,17 +70,13 @@
                         Clicked="OnAddItemClicked"
                         HorizontalOptions="Fill"
                         Margin="0,0,10,0"/>
-                <Button Text="Toon booschappenlijstje"
+                <Button Text="Lijstje"
                         FontSize="18"
                         Clicked="OnToonClicked"
                         HorizontalOptions="Fill"
                         Grid.Column="1"/>
 
             </Grid>
-            <Button Text="Sync"
-        Clicked="OnSyncClicked"
-        HorizontalOptions="Fill"
-        />
         </VerticalStackLayout>
     </ScrollView>
 
